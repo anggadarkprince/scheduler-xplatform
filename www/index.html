@@ -44,9 +44,9 @@
             <h1 class="title">SCHEDULER</h1>
             <div data-role="navbar">
                 <ul>
-                    <li><a href="index.html" data-icon="calendar">Schedule</a></li>
+                    <li><a href="index.html" data-icon="calendar" class="ui-state-persist">Schedule</a></li>
                     <li><a href="today.html" data-icon="clock">Today</a></li>
-                    <li><a href="#anylink" data-icon="edit">Note</a></li>
+                    <li><a href="note.html" data-icon="edit">Note</a></li>
                 </ul>
             </div>
         </div>
@@ -65,9 +65,23 @@
                     <p class="ui-li-aside">giggity giggity goo</p></a>
                 </li>
             </ul>
+
+            <ul data-role="listview" data-inset="true">
+                <li data-role="list-divider">Tuesday, February 10, 2014 <span class="ui-li-count">2</span></li>
+                <li><a href="#">
+                    <h2>Doctor</h2>
+                    <p>Regular check at 12:00</p>
+                    <p class="ui-li-aside">Appointment</p></a>
+                </li>
+                <li><a href="#">
+                    <h2>Glen Quagmire</h2>
+                    <p>The clam at 18:00</p>
+                    <p class="ui-li-aside">giggity giggity goo</p></a>
+                </li>
+            </ul>
         </div>
 
-        <div data-role="footer">
+        <div data-role="footer" data-position="fixed">
             <h1>&copy; Kemendesa 2015</h1>
         </div>
     </div>
@@ -79,6 +93,20 @@
 <script src="js/index.js"></script>
 <script>
     app.initialize();
+
+    $(document).ready(function(){
+        $.ajax({
+            type: "POST",
+            url: "http://scheduler.angga-ari.com/user",
+            data:{id:2, token:"34345"}
+            success:function(data){
+
+            },
+            error:function(data){
+
+            }
+        })
+    });
 </script>
 </body>
 </html>

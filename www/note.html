@@ -46,21 +46,13 @@
                 <ul>
                     <li><a href="index.html" data-icon="calendar">Schedule</a></li>
                     <li><a href="today.html" data-icon="clock">Today</a></li>
-                    <li><a href="#anylink" data-icon="edit">Note</a></li>
+                    <li><a href="note.html" data-icon="edit" class="ui-state-persist">Note</a></li>
                 </ul>
             </div>
         </div>
 
         <div data-role="main" class="ui-content">
-            <form class="ui-filterable">
-  <input id="myFilter" data-type="search">
-</form>
 
-<ul data-role="listview" data-filter="true" data-input="#myFilter">
-  <li><a href="#">Adele</a></li>
-  <li><a href="#">Billy</a></li>
-  <li><a href="#">Calvin</a></li>
-</ul>
         </div>
 
         <div data-role="footer">
@@ -75,6 +67,8 @@
 <script src="js/index.js"></script>
 <script>
     app.initialize();
+
+
 </script>
 </body>
 </html>
