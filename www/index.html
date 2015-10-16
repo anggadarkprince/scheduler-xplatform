@@ -21,7 +21,7 @@
 <body>
 <div class="app">
     <div data-role="page" id="index">
-        <div data-role="header" data-position="fixed">
+        <div data-role="header" data-position="fixed" data-theme="b">
             <h1 class="title">SCHEDULER</h1>
             <div data-role="navbar">
                 <ul>
@@ -37,7 +37,7 @@
             </ul>
         </div>
 
-        <div data-role="footer" data-position="fixed">
+        <div data-role="footer" data-position="fixed" data-theme="b">
             <h1>&copy; Kemendesa 2015</h1>
         </div>
     </div>
@@ -102,6 +102,55 @@
         });
     });
 
+    // HANDLE SCHEDULE DETAIL
+    $(document).on("pagebeforeshow","#schedule_detail", function(){
+        $("#event").html("");
+        $("#date").html("");
+        $("#time").html("");
+        $("#location").html("");
+        $("#description").html("");
+    });
+    $(document).on("pageshow","#schedule_detail", function(){
+        $.ajax({
+            type: "POST",
+            url: "http://scheduler.angga-ari.com/schedule/edit",
+            data: {id: getParameterByName("id"), token: "giuyw9eiu394"},
+            success: function (data) {
+                var schedule = data.schedule;
+                $("#event").html(schedule.event);
+                $("#date").html(schedule.date);
+                $("#time").html(schedule.time);
+                $("#location").html(schedule.location);
+                $("#description").html(schedule.description);
+            },
+            beforeSend: function() { $.mobile.loading('show'); },
+            complete: function() { $.mobile.loading('hide') },
+        });
+    });
+
+    // HANDLE NOTE DETAIL
+    $(document).on("pagebeforeshow","#note_detail", function(){
+        $("#title").html("");
+        $("#label").html("");
+        $("#note").html("");
+    });
+    $(document).on("pageshow","#note_detail", function(){
+        $.ajax({
+            type: "POST",
+            url: "http://scheduler.angga-ari.com/note/edit",
+            data: {id: getParameterByName("id"), token: "giuyw9eiu394"},
+            success: function (data) {
+                var note = data.note;
+                $("#title").html(note.title);
+                $("#label").html(note.label);
+                $("#note").html(note.note);
+            },
+            beforeSend: function() { $.mobile.loading('show'); },
+            complete: function() { $.mobile.loading('hide') },
+        });
+    });
+
+
     function populateListSchedule(data){
         var dataHtml = "";
         var lastDate = "";
@@ -113,7 +162,7 @@
                 lastDate = row.date;
             }
             dataHtml += "<li>";
-            dataHtml += "<a href='schedule.html?id="+row.id+"'>";
+            dataHtml += "<a href='schedule_detail.html?id="+row.id+"'>";
             dataHtml += "<h2>" + row.event + "</h2>";
             dataHtml += "<p>Time : " + row.time.toString().substr(0,5) + "</p>";
             dataHtml += "</a>";
@@ -126,7 +175,7 @@
         var dataHtml = "";
         $.each(data, function (i, row) {
             dataHtml += "<li>";
-            dataHtml += "<a href='detail.html?id="+row.id+"'>";
+            dataHtml += "<a href='note_detail.html?id="+row.id+"'>";
             dataHtml += "<h2>" + row.title + "</h2>";
             dataHtml += "<p>Label : " + row.label + "</p>";
             dataHtml += "</a>";
@@ -135,6 +184,9 @@
         $(".content-list").append(dataHtml).listview('refresh');
     }
 
+    function getParameterByName(name) {
+        return decodeURI((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]);
+    }
 </script>
 </body>
 </html>
