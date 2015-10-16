@@ -1,4 +1,4 @@
-<div data-role="page" id="note_detail">
+<div data-role="page" id="incoming">
     <div data-role="header" data-position="fixed" data-theme="b">
         <a href="#myPanel" class="ui-btn-left ui-btn ui-btn-inline ui-btn-icon-left ui-icon-grid btn-menu">MENU</a>
         <h1 class="title">SCHEDULER</h1>
@@ -16,24 +16,16 @@
         <ul class="sidebar">
             <li><a href="index.html">Dashboard</a></li>
             <li><a href="schedule.html">Schedule</a></li>
-            <li><a href="incoming.html">Incoming</a></li>
+            <li class="active"><a href="incoming.html">Incoming</a></li>
             <li><a href="today.html">Today</a></li>
             <li><a href="tomorrow.html">Tomorrow</a></li>
-            <li class="active"><a href="note.html">Note</a></li>
+            <li><a href="note.html">Note</a></li>
         </ul>
     </div>
 
-    <div data-role="main" class="ui-content">
-        <h1>Note Detail</h1>
-        <form method="post" action="#">
-            <label class="label">Title:</label>
-            <p id="title"></p>
-            <label class="label">Label:</label>
-            <p id="label"></p>
-            <label class="label">Note:</label>
-            <p id="note"></p>
-            <a href="note.html" data-role="button" data-rel="back" class="btn-back" data-theme="b">BACK TO LIST</a>
-        </form>
+    <div data-role="content" class="ui-content">
+        <ul data-role="listview" data-inset="true" class="content-list">
+        </ul>
     </div>
 
     <div data-role="footer" data-position="fixed" data-theme="b">

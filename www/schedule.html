@@ -20,13 +20,13 @@
 </head>
 <body>
 <div class="app">
-    <div data-role="page" id="index">
+    <div data-role="page" id="schedule">
         <div data-role="header" data-position="fixed" data-theme="b">
             <a href="#myPanel" class="ui-btn-left ui-btn ui-btn-inline ui-btn-icon-left ui-icon-grid btn-menu">MENU</a>
             <h1 class="title">SCHEDULER</h1>
             <div data-role="navbar">
                 <ul>
-                    <li><a href="schedule.html" data-icon="calendar">Schedule</a></li>
+                    <li><a href="schedule.html" data-icon="calendar" class="ui-state-persist">Schedule</a></li>
                     <li><a href="today.html" data-icon="clock">Today</a></li>
                     <li><a href="note.html" data-icon="edit">Note</a></li>
                 </ul>
@@ -36,8 +36,8 @@
         <div data-role="panel" id="myPanel" data-theme="b">
             <h2 class="title">KEMENDESA</h2>
             <ul class="sidebar">
-                <li class="active"><a href="index.html">Dashboard</a></li>
-                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="index.html">Dashboard</a></li>
+                <li class="active"><a href="schedule.html">Schedule</a></li>
                 <li><a href="incoming.html">Incoming</a></li>
                 <li><a href="today.html">Today</a></li>
                 <li><a href="tomorrow.html">Tomorrow</a></li>
@@ -46,12 +46,8 @@
         </div>
 
         <div data-role="content" class="ui-content">
-            <div class="dashboard">
-                <img src="img/kemendesa.png">
-                <h1>KEMENDESA</h1>
-                <h3>SCHEDULER</h3>
-                <p>A scheduler is what carries out the scheduling activity. Scheduling is the method by which work specified by some means is assigned to resources that complete the work especially for Kemendesa.</p>
-            </div>
+            <ul data-role="listview" data-inset="true" class="content-list">
+            </ul>
         </div>
 
         <div data-role="footer" data-position="fixed" data-theme="b">
@@ -69,10 +65,10 @@
     app.initialize();
 
     // HANDLE SCHEDULE LIST
-    $(document).on("pagebeforeshow","#schedule", function(){
+    $(document).on("pagebeforeshow","#index", function(){
         $(".content-list").html("");
     });
-    $(document).on("pageshow","#schedule", function(){
+    $(document).on("pageshow","#index", function(){
         $.ajax({
             type: "POST",
             url: "http://scheduler.angga-ari.com/schedule",
@@ -167,12 +163,12 @@
             url: "http://scheduler.angga-ari.com/schedule/edit",
             data: {id: getParameterByName("id"), token: "giuyw9eiu394"},
             success: function (data) {
-                var schedules = data.schedule;
-                $("#event").html(schedules.event);
-                $("#date").html(schedules.date);
-                $("#time").html(schedules.time);
-                $("#location").html(schedules.location);
-                $("#description").html(schedules.description);
+                var schedule = data.schedule;
+                $("#event").html(schedule.event);
+                $("#date").html(schedule.date);
+                $("#time").html(schedule.time);
+                $("#location").html(schedule.location);
+                $("#description").html(schedule.description);
             },
             beforeSend: function() { $.mobile.loading('show'); },
             complete: function() { $.mobile.loading('hide') },
@@ -215,7 +211,7 @@
             dataHtml += "<li>";
             dataHtml += "<a href='schedule_detail.html?id="+row.id+"' data-transition='slide'>";
             dataHtml += "<h2>" + row.event + "</h2>";
-            dataHtml += "<p>Time : <strong>" + row.time.toString().substr(0,5) + "</strong> At : <strong>" + row.location + "</strong></p>";
+            dataHtml += "<p>Time : " + row.time.toString().substr(0,5) + "</p>";
             dataHtml += "</a>";
             dataHtml += "</li>";
         });
@@ -228,7 +224,7 @@
             dataHtml += "<li>";
             dataHtml += "<a href='note_detail.html?id="+row.id+"' data-transition='slide'>";
             dataHtml += "<h2>" + row.title + "</h2>";
-            dataHtml += "<p>Label : <strong>" + row.label + "</strong>, Created at "+row.created_at.toString().substr(0,16)+"</p>";
+            dataHtml += "<p>Label : " + row.label + "</p>";
             dataHtml += "</a>";
             dataHtml += "</li>";
         });
