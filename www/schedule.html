@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.structure-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.external-png-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.inline-svg-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.inline-png-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.icons-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+    <title>Kemendesa Scheduler</title>
+</head>
+<body>
+<div class="app">
+    <div data-role="page">
+        <div data-role="header" data-position="fixed">
+            <h1 class="title">SCHEDULER</h1>
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="index.html" data-icon="calendar">Schedule</a></li>
+                    <li><a href="today.html" data-icon="clock">Today</a></li>
+                    <li><a href="note.html" data-icon="edit">Note</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div data-role="main" class="ui-content">
+            <form method="post" action="#">
+                <label class="label">Event:</label>
+                <p id="event"></p>
+                <label class="label">Date:</label>
+                <p id="date"></p>
+                <label class="label">Time:</label>
+                <p id="time"></p>
+                <label class="label">Location:</label>
+                <p id="location"></p>
+                <label class="label">Description:</label>
+                <p id="description"></p>
+                <button type="button" data-rel="back">BACK TO LIST</button>
+            </form>
+        </div>
+
+        <div data-role="footer" data-position="fixed">
+            <h1>&copy; Kemendesa 2015</h1>
+        </div>
+    </div>
+</div>
+
+<script src="cordova.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/date.js"></script>
+<script>
+    app.initialize();
+
+
+    $(document).on('pagecreate',function() {
+        
+        $.ajax({
+            type: "POST",
+            url: "http://scheduler.angga-ari.com/schedule/edit",
+            data: {id: getParameterByName("id"), token: "giuyw9eiu394"},
+            success: function (data) {
+                var schedule = data.schedule;
+                $("#event").val(schedule.event);
+                $("#date").val(schedule.date);
+                $("#time").val(schedule.time);
+                $("#location").val(schedule.location);
+                $("#description").val(schedule.description);
+            },
+error:function(e){
+	alert('error');
+},
+            beforeSend: function() { $.mobile.loading('show'); }, //Show spinner
+            complete: function() { $.mobile.loading('hide') }, //Hide spinner
+        });
+
+        
+    });
+function getParameterByName(name) {
+            return decodeURI((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]);
+        }
+</script>
+</body>
+</html>
