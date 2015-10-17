@@ -59,7 +59,12 @@ h1.title{
 label.label{
     font-weight: bold;
 }
-
+.ui-popup-container{
+    text-transform: none !important;
+}
+.ui-popup-container a:first-child{
+    margin-top: 20px !important;
+}
 .btn-back{
     margin: 30px 0 !important;
 }
@@ -68,6 +73,9 @@ label.label{
 }
 .ui-panel-inner{
     padding: 0;
+}
+.ui-body-b{
+    border-width: 0;
 }
 .ui-panel-inner .title{
     padding: 20px;
@@ -109,6 +117,7 @@ label.label{
 .dashboard p{
     text-transform: none;
 }
+.ui-mobile label, div.ui-controlgroup-label,
 form p,
 .content-list h2{
     text-transform: none;
@@ -126,4 +135,10 @@ form p,
 }
 .control-row{
     margin: 15px 0 !important;
+}
+.no-date{
+    display: block;
+    margin: 20px;
+    text-align: center;
+    padding: 10px;
 }

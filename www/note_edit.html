@@ -27,28 +27,45 @@
         <h1>Edit Note</h1>
         <form method="post" action="#">
             <div class="control-row">
-                <label class="label">Title:</label>
+                <label class="label" for="title">Title:</label>
                 <input type="text" name="title" id="title" placeholder="Put note title" maxlength="200">
             </div>
 
             <div class="control-row">
-                <label class="label">Label:</label>
+                <label class="label" for="label">Label:</label>
                 <input type="text" name="label" id="label" placeholder="Eg. Important, Work, Daily" maxlength="50">
             </div>
 
             <div class="control-row">
-                <label class="label">Note:</label>
+                <label class="label" for="note">Note:</label>
                 <textarea name="note" id="note" rows="4" placeholder="Write content of the note here"></textarea>
             </div>
 
             <div class="control-row">
-                <a href="#" data-role="button" class="btn-back btn-update-note" data-theme="b">UPDATE NOTE</a>
-                <a href="note.html" data-role="button" data-rel="back" class="btn-back" data-theme="b">BACK TO LIST</a>
+                <a href="#" data-role="button" class="btn-update-note" data-theme="b">UPDATE NOTE</a>
+                <a href="note.html" class="ui-icon-arrow-l ui-btn-icon-left" data-role="button" data-rel="back" data-theme="b">BACK TO LIST</a>
             </div>
         </form>
-    </div>
 
-    <div data-role="footer" data-position="fixed" data-theme="b">
-        <h1>&copy; Kemendesa 2015</h1>
+        <div data-role="popup" data-dialog="true" id="saved" data-overlay-theme="b">
+            <div data-role="header">
+                <h1>Data Updated</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <p><strong>Note Data Successfully Updated</strong></p>
+                <p>Press OK to return</p>
+                <a href="note.html" class="ui-btn ui-corner-all">OK</a>
+            </div>
+        </div>
+
+        <div data-role="popup" data-dialog="true" id="failed" data-overlay-theme="b">
+            <div data-role="header">
+                <h1>Error</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <p><strong>Something is getting wrong!</strong></p>
+                <a href="note.html" class="ui-btn ui-corner-all">OK</a>
+            </div>
+        </div>
     </div>
 </div>

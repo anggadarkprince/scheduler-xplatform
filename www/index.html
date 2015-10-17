@@ -68,6 +68,8 @@
 <script>
     app.initialize();
 
+    var server = "http://localhost/scheduler_api"
+
     // HANDLE SCHEDULE LIST
     $(document).on("pagebeforeshow","#schedule", function(){
         $(".content-list").html("");
@@ -75,7 +77,7 @@
     $(document).on("pageshow","#schedule", function(){
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/schedule",
+            url: server+"/schedule",
             data: {user_id: 1, token: "giuyw9eiu394"},
             success: function (data) {
                 populateListSchedule(data.schedules);
@@ -92,7 +94,7 @@
     $(document).on("pageshow","#incoming", function(){
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/schedule/incoming",
+            url: server+"/schedule/incoming",
             data: {user_id: 1, token: "giuyw9eiu394"},
             success: function (data) {
                 populateListSchedule(data.incoming);
@@ -109,7 +111,7 @@
     $(document).on("pageshow","#today", function(){
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/schedule/today",
+            url: server+"/schedule/today",
             data: {user_id: 1, token: "giuyw9eiu394"},
             success: function (data) {
                 populateListSchedule(data.today);
@@ -126,7 +128,7 @@
     $(document).on("pageshow","#tomorrow", function(){
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/schedule/tomorrow",
+            url: server+"/schedule/tomorrow",
             data: {user_id: 1, token: "giuyw9eiu394"},
             success: function (data) {
                 populateListSchedule(data.tomorrow);
@@ -143,7 +145,7 @@
     $(document).on("pageshow","#note", function(){
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/note",
+            url: server+"/note",
             data: {user_id: 1, token: "giuyw9eiu394"},
             success: function (data) {
                 populateListNote(data.notes);
@@ -168,7 +170,7 @@
     $(document).on("pageshow","#schedule_detail", function(){
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/schedule/edit",
+            url: server+"/schedule/edit",
             data: {id: getParameterByName("id"), token: "giuyw9eiu394"},
             success: function (data) {
                 var schedules = data.schedule;
@@ -196,7 +198,7 @@
     $(document).on("pageshow","#schedule_edit", function(){
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/schedule/edit",
+            url: server+"/schedule/edit",
             data: {id: getParameterByName("id"), token: "giuyw9eiu394"},
             success: function (data) {
                 var schedules = data.schedule;
@@ -216,7 +218,7 @@
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/schedule/update",
+            url: server+"/schedule/update",
             data: {
                 id: getParameterByName("id"),
                 token: "giuyw9eiu394",
@@ -228,10 +230,10 @@
             },
             success: function (data) {
                 if(data.status = "success"){
-                    alert("update schedule success");
+                    $("#saved").popup("open");
                 }
                 else{
-                    alert("update schedule failed");
+                    $("#failed").popup("open");
                 }
             },
             beforeSend: function() { $.mobile.loading('show'); },
@@ -244,7 +246,7 @@
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/schedule/insert",
+            url: server+"/schedule/insert",
             data: {
                 user_id: 1,
                 token: "giuyw9eiu394",
@@ -256,10 +258,10 @@
             },
             success: function (data) {
                 if(data.status = "success"){
-                    alert("save schedule success");
+                    $("#saved").popup("open");
                 }
                 else{
-                    alert("save schedule failed");
+                    $("#failed").popup("open");
                 }
             },
             beforeSend: function() { $.mobile.loading('show'); },
@@ -270,19 +272,28 @@
     // HANDLE DELETE SCHEDULE
     $(document).on("click", ".btn-delete-schedule", function(e){
         e.preventDefault();
+        $("#dialogDelete").popup("open");
+    });
+    $(document).on("click", ".btn-delete-dismiss", function(e){
+        e.preventDefault();
+        $("#dialogDelete").popup("close");
+    });
+    $(document).on("click", ".btn-delete-schedule-confirmed", function(e){
+        $("#dialogDelete").popup("close");
+        e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/schedule/delete",
+            url: server+"/schedule/delete",
             data: {
                 id: getParameterByName("id"),
                 token: "giuyw9eiu394"
             },
             success: function (data) {
                 if(data.status = "success"){
-                    alert("delete schedule success");
+                    $("#dialogDeleted").popup("open");
                 }
                 else{
-                    alert("delete schedule failed");
+                    $("#dialogFailed").popup("open");
                 }
             },
             beforeSend: function() { $.mobile.loading('show'); },
@@ -303,7 +314,7 @@
     $(document).on("pageshow","#note_detail", function(){
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/note/edit",
+            url: server+"/note/edit",
             data: {id: getParameterByName("id"), token: "giuyw9eiu394"},
             success: function (data) {
                 var note = data.note;
@@ -325,7 +336,7 @@
     $(document).on("pageshow","#note_edit", function(){
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/note/edit",
+            url: server+"/note/edit",
             data: {id: getParameterByName("id"), token: "giuyw9eiu394"},
             success: function (data) {
                 var note = data.note;
@@ -343,7 +354,7 @@
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/note/update",
+            url: server+"/note/update",
             data: {
                 id: getParameterByName("id"),
                 token: "giuyw9eiu394",
@@ -353,10 +364,10 @@
             },
             success: function (data) {
                 if(data.status = "success"){
-                    alert("update note success");
+                    $("#saved").popup("open");
                 }
                 else{
-                    alert("update note failed");
+                    $("#failed").popup("open");
                 }
             },
             beforeSend: function() { $.mobile.loading('show'); },
@@ -369,7 +380,7 @@
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/note/insert",
+            url: server+"/note/insert",
             data: {
                 user_id: 1,
                 token: "giuyw9eiu394",
@@ -379,10 +390,10 @@
             },
             success: function (data) {
                 if(data.status = "success"){
-                    alert("save note success");
+                    $("#saved").popup("open");
                 }
                 else{
-                    alert("save note failed");
+                    $("#failed").popup("open");
                 }
             },
             beforeSend: function() { $.mobile.loading('show'); },
@@ -393,19 +404,28 @@
     // HANDLE DELETE NOTE
     $(document).on("click", ".btn-delete-note", function(e){
         e.preventDefault();
+        $("#dialogDelete").popup("open");
+    });
+    $(document).on("click", ".btn-delete-dismiss", function(e){
+        e.preventDefault();
+        $("#dialogDelete").popup("close");
+    });
+    $(document).on("click", ".btn-delete-note-confirmed", function(e){
+        $("#dialogDelete").popup("close");
+        e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "http://scheduler.angga-ari.com/note/delete",
+            url: server+"/note/delete",
             data: {
                 id: getParameterByName("id"),
                 token: "giuyw9eiu394"
             },
             success: function (data) {
                 if(data.status = "success"){
-                    alert("delete note success");
+                    $("#dialogDeleted").popup("open");
                 }
                 else{
-                    alert("delete note failed");
+                    $("#dialogFailed").popup("open");
                 }
             },
             beforeSend: function() { $.mobile.loading('show'); },
@@ -413,37 +433,46 @@
         });
     });
 
-
     function populateListSchedule(data){
         var dataHtml = "";
         var lastDate = "";
-        $.each(data, function (i, row) {
-            if(row.date != lastDate){
-                var date = new Date(row.date);
-                var dateString = date.format("dddd, d mmmm yyyy");
-                dataHtml += "<li data-role='list-divider'>"+dateString+"</li>";
-                lastDate = row.date;
-            }
-            dataHtml += "<li>";
-            dataHtml += "<a href='schedule_detail.html?id="+row.id+"' data-transition='slide'>";
-            dataHtml += "<h2>" + row.event + "</h2>";
-            dataHtml += "<p>Time : <strong>" + row.time.toString().substr(0,5) + "</strong> At : <strong>" + row.location + "</strong></p>";
-            dataHtml += "</a>";
-            dataHtml += "</li>";
-        });
+        if(data.length == 0){
+            dataHtml += "<p class='no-date'>No schedules available</p>";
+        }
+        else{
+            $.each(data, function (i, row) {
+                if(row.date != lastDate){
+                    var date = new Date(row.date);
+                    var dateString = date.format("dddd, d mmmm yyyy");
+                    dataHtml += "<li data-role='list-divider'>"+dateString+"</li>";
+                    lastDate = row.date;
+                }
+                dataHtml += "<li>";
+                dataHtml += "<a href='schedule_detail.html?id="+row.id+"' data-transition='slide'>";
+                dataHtml += "<h2>" + row.event + "</h2>";
+                dataHtml += "<p>Time : <strong>" + row.time.toString().substr(0,5) + "</strong> At : <strong>" + row.location + "</strong></p>";
+                dataHtml += "</a>";
+                dataHtml += "</li>";
+            });
+        }
         $(".content-list").append(dataHtml).listview('refresh');
     }
 
     function populateListNote(data){
         var dataHtml = "";
-        $.each(data, function (i, row) {
-            dataHtml += "<li>";
-            dataHtml += "<a href='note_detail.html?id="+row.id+"' data-transition='slide'>";
-            dataHtml += "<h2>" + row.title + "</h2>";
-            dataHtml += "<p>Label : <strong>" + row.label + "</strong>, Created at "+row.created_at.toString().substr(0,16)+"</p>";
-            dataHtml += "</a>";
-            dataHtml += "</li>";
-        });
+        if(data.length == 0){
+            dataHtml += "<p class='no-date'>No notes available</p>";
+        }
+        else{
+            $.each(data, function (i, row) {
+                dataHtml += "<li>";
+                dataHtml += "<a href='note_detail.html?id="+row.id+"' data-transition='slide'>";
+                dataHtml += "<h2>" + row.title + "</h2>";
+                dataHtml += "<p>Label : <strong>" + row.label + "</strong>, Created at "+row.created_at.toString().substr(0,16)+"</p>";
+                dataHtml += "</a>";
+                dataHtml += "</li>";
+            });
+        }
         $(".content-list").append(dataHtml).listview('refresh');
     }
 
