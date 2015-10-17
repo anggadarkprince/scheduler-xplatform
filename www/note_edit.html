@@ -1,4 +1,4 @@
-<div data-role="page" id="schedule_detail">
+<div data-role="page" id="note_edit">
     <div data-role="header" data-position="fixed" data-theme="b">
         <a href="#myPanel" class="ui-btn-left ui-btn ui-btn-inline ui-btn-icon-left ui-icon-grid btn-menu">MENU</a>
         <h1 class="title">SCHEDULER</h1>
@@ -15,32 +15,35 @@
         <h2 class="title">KEMENDESA</h2>
         <ul class="sidebar">
             <li><a href="index.html">Dashboard</a></li>
-            <li class="active"><a href="schedule.html">Schedule</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
             <li><a href="incoming.html">Incoming</a></li>
             <li><a href="today.html">Today</a></li>
             <li><a href="tomorrow.html">Tomorrow</a></li>
-            <li><a href="note.html">Note</a></li>
+            <li class="active"><a href="note.html">Note</a></li>
         </ul>
     </div>
 
     <div data-role="main" class="ui-content">
-        <h1>Schedule Detail</h1>
+        <h1>Edit Note</h1>
         <form method="post" action="#">
-            <label class="label">Event:</label>
-            <p id="event"></p>
-            <label class="label">Date:</label>
-            <p id="date"></p>
-            <label class="label">Time:</label>
-            <p id="time"></p>
-            <label class="label">Location:</label>
-            <p id="location"></p>
-            <label class="label">Description:</label>
-            <p id="description"></p>
+            <div class="control-row">
+                <label class="label">Title:</label>
+                <input type="text" name="title" id="title" placeholder="Put note title" maxlength="200">
+            </div>
 
             <div class="control-row">
-                <a href="schedule_edit.html" class="btn-edit-schedule" data-role="button" data-theme="a">EDIT SCHEDULE</a>
-                <a href="#" class="btn-delete-schedule" data-role="button" data-theme="a">DELETE SCHEDULE</a>
-                <a href="schedule.html" data-role="button" data-rel="back" class="btn-back" data-theme="b">BACK TO LIST</a>
+                <label class="label">Label:</label>
+                <input type="text" name="label" id="label" placeholder="Eg. Important, Work, Daily" maxlength="50">
+            </div>
+
+            <div class="control-row">
+                <label class="label">Note:</label>
+                <textarea name="note" id="note" rows="4" placeholder="Write content of the note here"></textarea>
+            </div>
+
+            <div class="control-row">
+                <a href="#" data-role="button" class="btn-back btn-update-note" data-theme="b">UPDATE NOTE</a>
+                <a href="note.html" data-role="button" data-rel="back" class="btn-back" data-theme="b">BACK TO LIST</a>
             </div>
         </form>
     </div>

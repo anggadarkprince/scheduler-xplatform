@@ -153,6 +153,9 @@
         });
     });
 
+    // SCHEDULE CRUD ================================================================
+    // ==============================================================================
+    // ==============================================================================
     // HANDLE SCHEDULE DETAIL
     $(document).on("pagebeforeshow","#schedule_detail", function(){
         $("#event").html("");
@@ -160,6 +163,7 @@
         $("#time").html("");
         $("#location").html("");
         $("#description").html("");
+        $(".btn-edit-schedule").attr("href", "schedule_edit.html?id="+getParameterByName("id"));
     });
     $(document).on("pageshow","#schedule_detail", function(){
         $.ajax({
@@ -169,7 +173,9 @@
             success: function (data) {
                 var schedules = data.schedule;
                 $("#event").html(schedules.event);
-                $("#date").html(schedules.date);
+                var date = new Date(schedules.date);
+                var dateString = date.format("dddd, d mmmm yyyy");
+                $("#date").html(dateString);
                 $("#time").html(schedules.time);
                 $("#location").html(schedules.location);
                 $("#description").html(schedules.description);
@@ -179,11 +185,120 @@
         });
     });
 
+    // HANDLE EDIT SCHEDULE
+    $(document).on("pagebeforeshow","#schedule_edit", function(){
+        $("#event").val("");
+        $("#date").val("");
+        $("#time").val("");
+        $("#location").val("");
+        $("#description").val("");
+    });
+    $(document).on("pageshow","#schedule_edit", function(){
+        $.ajax({
+            type: "POST",
+            url: "http://scheduler.angga-ari.com/schedule/edit",
+            data: {id: getParameterByName("id"), token: "giuyw9eiu394"},
+            success: function (data) {
+                var schedules = data.schedule;
+                $("#event").val(schedules.event);
+                $("#date").val(schedules.date);
+                $("#time").val(schedules.time);
+                $("#location").val(schedules.location);
+                $("#description").val(schedules.description);
+            },
+            beforeSend: function() { $.mobile.loading('show'); },
+            complete: function() { $.mobile.loading('hide') },
+        });
+    });
+
+    // HANDLE UPDATE SCHEDULE
+    $(document).on("click", ".btn-update-schedule", function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "http://scheduler.angga-ari.com/schedule/update",
+            data: {
+                id: getParameterByName("id"),
+                token: "giuyw9eiu394",
+                event: $("#event").val(),
+                date: $("#date").val(),
+                time: $("#time").val(),
+                location: $("#location").val(),
+                description: $("#description").val(),
+            },
+            success: function (data) {
+                if(data.status = "success"){
+                    alert("update schedule success");
+                }
+                else{
+                    alert("update schedule failed");
+                }
+            },
+            beforeSend: function() { $.mobile.loading('show'); },
+            complete: function() { $.mobile.loading('hide') },
+        });
+    });
+
+    // HANDLE SAVE SCHEDULE
+    $(document).on("click", ".btn-save-schedule", function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "http://scheduler.angga-ari.com/schedule/insert",
+            data: {
+                user_id: 1,
+                token: "giuyw9eiu394",
+                event: $("#event").val(),
+                date: $("#date").val(),
+                time: $("#time").val(),
+                location: $("#location").val(),
+                description: $("#description").val()
+            },
+            success: function (data) {
+                if(data.status = "success"){
+                    alert("save schedule success");
+                }
+                else{
+                    alert("save schedule failed");
+                }
+            },
+            beforeSend: function() { $.mobile.loading('show'); },
+            complete: function() { $.mobile.loading('hide') },
+        });
+    });
+
+    // HANDLE DELETE SCHEDULE
+    $(document).on("click", ".btn-delete-schedule", function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "http://scheduler.angga-ari.com/schedule/delete",
+            data: {
+                id: getParameterByName("id"),
+                token: "giuyw9eiu394"
+            },
+            success: function (data) {
+                if(data.status = "success"){
+                    alert("delete schedule success");
+                }
+                else{
+                    alert("delete schedule failed");
+                }
+            },
+            beforeSend: function() { $.mobile.loading('show'); },
+            complete: function() { $.mobile.loading('hide') },
+        });
+    });
+
+    // NOTE CRUD ================================================================
+    // ==============================================================================
+    // ==============================================================================
     // HANDLE NOTE DETAIL
     $(document).on("pagebeforeshow","#note_detail", function(){
         $("#title").html("");
         $("#label").html("");
         $("#note").html("");
+        $(".btn-edit-note").attr("href", "note_edit.html?id="+getParameterByName("id"));
     });
     $(document).on("pageshow","#note_detail", function(){
         $.ajax({
@@ -195,6 +310,103 @@
                 $("#title").html(note.title);
                 $("#label").html(note.label);
                 $("#note").html(note.note);
+            },
+            beforeSend: function() { $.mobile.loading('show'); },
+            complete: function() { $.mobile.loading('hide') },
+        });
+    });
+
+    // HANDLE EDIT NOTE
+    $(document).on("pagebeforeshow","#note_edit", function(){
+        $("#title").val("");
+        $("#label").val("");
+        $("#note").val("");
+    });
+    $(document).on("pageshow","#note_edit", function(){
+        $.ajax({
+            type: "POST",
+            url: "http://scheduler.angga-ari.com/note/edit",
+            data: {id: getParameterByName("id"), token: "giuyw9eiu394"},
+            success: function (data) {
+                var note = data.note;
+                $("#title").val(note.title);
+                $("#label").val(note.label);
+                $("#note").val(note.note);
+            },
+            beforeSend: function() { $.mobile.loading('show'); },
+            complete: function() { $.mobile.loading('hide') },
+        });
+    });
+
+    // HANDLE UPDATE NOTE
+    $(document).on("click", ".btn-update-note", function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "http://scheduler.angga-ari.com/note/update",
+            data: {
+                id: getParameterByName("id"),
+                token: "giuyw9eiu394",
+                title: $("#title").val(),
+                label: $("#label").val(),
+                note: $("#note").val()
+            },
+            success: function (data) {
+                if(data.status = "success"){
+                    alert("update note success");
+                }
+                else{
+                    alert("update note failed");
+                }
+            },
+            beforeSend: function() { $.mobile.loading('show'); },
+            complete: function() { $.mobile.loading('hide') },
+        });
+    });
+
+    // HANDLE SAVE NOTE
+    $(document).on("click", ".btn-save-note", function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "http://scheduler.angga-ari.com/note/insert",
+            data: {
+                user_id: 1,
+                token: "giuyw9eiu394",
+                title: $("#title").val(),
+                label: $("#label").val(),
+                note: $("#note").val()
+            },
+            success: function (data) {
+                if(data.status = "success"){
+                    alert("save note success");
+                }
+                else{
+                    alert("save note failed");
+                }
+            },
+            beforeSend: function() { $.mobile.loading('show'); },
+            complete: function() { $.mobile.loading('hide') },
+        });
+    });
+
+    // HANDLE DELETE NOTE
+    $(document).on("click", ".btn-delete-note", function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "http://scheduler.angga-ari.com/note/delete",
+            data: {
+                id: getParameterByName("id"),
+                token: "giuyw9eiu394"
+            },
+            success: function (data) {
+                if(data.status = "success"){
+                    alert("delete note success");
+                }
+                else{
+                    alert("delete note failed");
+                }
             },
             beforeSend: function() { $.mobile.loading('show'); },
             complete: function() { $.mobile.loading('hide') },

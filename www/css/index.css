@@ -124,3 +124,6 @@ form p,
     font-size: 14px !important;
     color: #444;
 }
+.control-row{
+    margin: 15px 0 !important;
+}
